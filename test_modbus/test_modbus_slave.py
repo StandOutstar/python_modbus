@@ -5,14 +5,15 @@ import modbus_tk.modbus_rtu as modbus_rtu
 import modbus_tk.hooks as hoook
 import serial
 import time
-import modbus_dict
-
-PORT = "COM38"
+# import modbus_dict
+import parse_modbus_request
+PORT = "COM36"
 
 
 def hookbefore_handle_request(requestpdu):
     # request is a str like '\x01\x06\x00\x01\x00\x01\x19\xca'
-    modbus_dict.calculate(requestpdu)
+    # parse_modbus_request.parse_modbus_request(requestpdu)
+    parse_modbus_request.parse_modbus_request(requestpdu)
 
 hoook.install_hook("modbus.Server.before_handle_request", hookbefore_handle_request)
 
