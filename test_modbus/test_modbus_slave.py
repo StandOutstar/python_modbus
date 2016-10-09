@@ -7,7 +7,7 @@ import serial
 import time
 # import modbus_dict
 import parse_modbus_request
-PORT = "COM36"
+PORT = "COM19"
 
 
 def hookbefore_handle_request(requestpdu):
