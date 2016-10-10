@@ -16,7 +16,7 @@ def parse_modbus_request(requestpdu):
     (blockaddress, ) = struct.unpack('>B', modbus_request[2:3])  # 拆包结果是个tuple
     # print(modbus_request)
     # print(hex(regaddress))
-    print("发给", SlaveIdDict[slaveid], FunCodeDict[funcode], RegisterBlockDict[blockaddress], "起始地址:", hex(regaddress), "起始位置:", StateBlockDict[regaddress])
+    print("发给", SlaveIdDict[slaveid], FunCodeDict[funcode], RegisterBlockDict[blockaddress], "起始地址:", hex(regaddress), "起始位置:", StateBlockDict[regaddress], end="")
 
     if funcode == 0x03:
         (quantity, ) = struct.unpack('>H', modbus_request[4:6])

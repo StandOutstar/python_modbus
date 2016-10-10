@@ -5,7 +5,6 @@ import modbus_tk.modbus_rtu as modbus_rtu
 import modbus_tk.hooks as hoook
 import serial
 import time
-# import modbus_dict
 import parse_modbus_request
 PORT = "COM19"
 
@@ -15,6 +14,7 @@ def hookbefore_handle_request(requestpdu):
     # parse_modbus_request.parse_modbus_request(requestpdu)
     parse_modbus_request.parse_modbus_request(requestpdu)
 
+# 安装钩子
 hoook.install_hook("modbus.Server.before_handle_request", hookbefore_handle_request)
 
 logger = modbus_tk.utils.create_logger(name="console", record_format="%(message)s")
