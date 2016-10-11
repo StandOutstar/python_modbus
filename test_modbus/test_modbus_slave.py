@@ -6,6 +6,7 @@ import modbus_tk.hooks as hoook
 import serial
 import time
 import parse_modbus_request
+
 PORT = "COM19"
 
 
