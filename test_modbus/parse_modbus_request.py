@@ -10,11 +10,6 @@ from actionTable import StateBlockDict
 from PyQt5.QtCore import *
 
 
-# class sign():
-#     ledinfosignal = pyqtSignal(str)
-#     expressioninfosignal = pyqtSignal(str)
-#     s_expressioninfo = s_baseinfo
-
 def parse_modbus_request(requestpdu):
     s_baseinfo = ''
 
@@ -69,7 +64,7 @@ def parse_modbus_request(requestpdu):
 
 def parse_led(data, s_baseinfo):
     s_ledinfo = s_baseinfo
-
+    # ledsig = Sign()
 
     # 控制字
     # b15 1覆盖方式执行/0队列缓存执行

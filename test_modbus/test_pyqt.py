@@ -15,13 +15,24 @@ import modbus_tk.modbus_rtu as modbus_rtu
 import modbus_tk.hooks as hoook
 import serial
 import time
-import parse_modbus_request
+from parse_and_emit import parse_modbus
+
+# 定义的全局解析类，类里有解析完的信号，信号绑定到主窗口中的显示函数上。
+pmc = parse_modbus()
 
 
 def hookbefore_handle_request(requestpdu):
     # request is a str like '\x01\x06\x00\x01\x00\x01\x19\xca'
     # parse_modbus_request.parse_modbus_request(requestpdu)
-    parse_modbus_request.parse_modbus_request(requestpdu)
+    # parse_modbus.requestpdu = requestpdu
+
+    # parse_modbus.requestpdu = requestpdu
+    pmc.parse_modbus_request(requestpdu)
+
+# def hookbefore_handle_request(requestpdu):
+#     # request is a str like '\x01\x06\x00\x01\x00\x01\x19\xca'
+#     # parse_modbus_request.parse_modbus_request(requestpdu)
+#     parse_modbus_request.parse_modbus_request(requestpdu)
 
 # # 全局变量，端口名
 port = ''
@@ -34,6 +45,9 @@ class mywindow(QtWidgets.QMainWindow, Ui_MyMainWindow):
         self.setWindowIcon(QIcon('icon.jpg'))
         self.setupUi(self)
         self.thread = ParseModbusthread()
+        pmc.ledinfosignal.connect(self.displayledinfo)
+        pmc.expressioninfosignal.connect(self.displayexpressioninfo)
+        pmc.actioninfosignal.connect(self.displayactioninfo)
 
         # 把thread中的信号连接到自己的函数上。自己的函数实现显示。
         # self.thread.display1signal.connect(self.display1out)
@@ -52,8 +66,21 @@ class mywindow(QtWidgets.QMainWindow, Ui_MyMainWindow):
         # 解析线程
         self.thread.start()
 
+    def displayledinfo(self, info):
+        # print("SIGNAL", info)
+        self.textBrowser.append(info)
+
+    def displayexpressioninfo(self, info):
+        # print("SIGNAL", info)
+        self.textBrowser_2.append(info)
+
+    def displayactioninfo(self, info):
+        # print("SIGNAL", info)
+        self.textBrowser_3.append(info)
 
 class ParseModbusthread(QThread):
+    # pmc = parse_modbus()
+
     def __int__(self):
         super(ParseModbusthread, self).__init__()
 
