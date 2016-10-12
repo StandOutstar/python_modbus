@@ -101,7 +101,7 @@ class parse_modbus(QObject):
         # 参数3
         # 个别效果有
         s_ledinfo += ("LED效果:" + str(ledDic[data[1]]) + ' ' + "亮度:" + str(data[2]))
-        print(s_ledinfo)
+        # print(s_ledinfo)
         # global ledinfosignal
         # ledinfosignal.emit(s_ledinfo)
         self.ledinfosignal.emit(s_ledinfo)
@@ -139,7 +139,7 @@ class parse_modbus(QObject):
         # 参数3
         # 个别效果有
         s_expressioninfo += ("表情效果:" + str(eyeemotionDict[data[1]]) + ' ' + "次数:" + str(data[2]))
-        print(s_expressioninfo)
+        # print(s_expressioninfo)
         # global expressioninfosignal
         # expressioninfosignal.emit(s_expressioninfo)
         self.expressioninfosignal.emit(s_expressioninfo)
@@ -189,7 +189,7 @@ class parse_modbus(QObject):
         # print("参数:", (data[6] & 0x0FFF))
         s_actioninfo += ("C动作编号:"+str(actionDict[data[5]])+' '+"类型:"+str(actioncatgoryDict[(data[6] & 0x7000) >> 12])+' '+"参数:"+str(data[6] & 0x0FFF))
 
-        print(s_actioninfo)
+        # print(s_actioninfo)
         # global actioninfosignal
         # actioninfosignal.emit(s_actioninfo)
 

@@ -131,9 +131,14 @@ class Ui_MyMainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MyMainWindow.setWindowTitle(_translate("MyMainWindow", "Display"))
         self.label_4.setText(_translate("MyMainWindow", "端口输入:"))
+        self.pushButton_2.setToolTip(_translate("MyMainWindow", "<html><head/><body><p>连接前请核对串口号</p></body></html>"))
         self.pushButton_2.setText(_translate("MyMainWindow", "连接"))
+        self.pushButton.setToolTip(_translate("MyMainWindow", "<html><head/><body><p>关闭程序</p></body></html>"))
         self.pushButton.setText(_translate("MyMainWindow", "停止"))
         self.label_2.setText(_translate("MyMainWindow", "Expression"))
         self.label.setText(_translate("MyMainWindow", "LED"))
+        self.textBrowser_2.setToolTip(_translate("MyMainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">显示主板发出的设置表情的信息</span></p></body></html>"))
         self.label_3.setText(_translate("MyMainWindow", "Action"))
+        self.textBrowser.setToolTip(_translate("MyMainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">显示主板发出的LED设置信息</span></p></body></html>"))
+        self.textBrowser_3.setToolTip(_translate("MyMainWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">显示主板发出的设置动作的信息</span></p></body></html>"))
 

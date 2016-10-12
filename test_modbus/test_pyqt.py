@@ -78,6 +78,7 @@ class mywindow(QtWidgets.QMainWindow, Ui_MyMainWindow):
         # print("SIGNAL", info)
         self.textBrowser_3.append(info)
 
+
 class ParseModbusthread(QThread):
     # pmc = parse_modbus()
 

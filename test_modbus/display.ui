@@ -101,6 +101,9 @@
             <pointsize>12</pointsize>
            </font>
           </property>
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;连接前请核对串口号&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
           <property name="text">
            <string>连接</string>
           </property>
@@ -118,6 +121,9 @@
            <font>
             <pointsize>12</pointsize>
            </font>
+          </property>
+          <property name="toolTip">
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;关闭程序&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="text">
            <string>停止</string>
@@ -153,7 +159,11 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QTextBrowser" name="textBrowser_2"/>
+       <widget class="QTextBrowser" name="textBrowser_2">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;显示主板发出的设置表情的信息&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
       </item>
       <item row="2" column="0" alignment="Qt::AlignHCenter">
        <widget class="QLabel" name="label_3">
@@ -169,10 +179,18 @@
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QTextBrowser" name="textBrowser"/>
+       <widget class="QTextBrowser" name="textBrowser">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;显示主板发出的LED设置信息&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QTextBrowser" name="textBrowser_3"/>
+       <widget class="QTextBrowser" name="textBrowser_3">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;显示主板发出的设置动作的信息&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
       </item>
       <item row="3" column="0">
        <spacer name="verticalSpacer">
