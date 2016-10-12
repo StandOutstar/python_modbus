@@ -23,8 +23,8 @@ def hookbefore_handle_request(requestpdu):
     # parse_modbus_request.parse_modbus_request(requestpdu)
     parse_modbus_request.parse_modbus_request(requestpdu)
 
-# 全局变量，端口名
-global port
+# # 全局变量，端口名
+port = ''
 
 
 class mywindow(QtWidgets.QMainWindow, Ui_MyMainWindow):
@@ -58,7 +58,7 @@ class ParseModbusthread(QThread):
         super(ParseModbusthread, self).__init__()
 
     def run(self):
-
+        global port
         # 协议的解析阻塞了界面的显示,需要放到线程里
         # 安装钩子
         hoook.install_hook("modbus.Server.before_handle_request", hookbefore_handle_request)
