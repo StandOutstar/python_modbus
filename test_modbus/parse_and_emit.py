@@ -16,6 +16,11 @@ class parse_modbus(QObject):
     expressioninfosignal = pyqtSignal(str)
     actioninfosignal = pyqtSignal(str)
 
+    n_baseinfo_simply_switch = 1
+    n_ledinfo_simply_switch = 1
+    n_expressioninfo_simply_switch = 1
+    n_actioninfo_simply_switch = 1
+
     # def __init__(self, requestpdu):
     #     self.requestpdu = requestpdu
 
@@ -26,22 +31,29 @@ class parse_modbus(QObject):
         (slaveid, funcode) = struct.unpack('>BB', modbus_request[0:2])  # 拆包结果是个tuple
         (regaddress, ) = struct.unpack('>H', modbus_request[2:4])  # 拆包结果是个tuple
         (blockaddress, ) = struct.unpack('>B', modbus_request[2:3])  # 拆包结果是个tuple
-        # print(modbus_request)
-        # print(hex(regaddress))
 
         # print("发给", SlaveIdDict[slaveid], FunCodeDict[funcode], RegisterBlockDict[blockaddress], "起始地址:", hex(regaddress), "起始位置:", StateBlockDict[regaddress], end="")
-        s_baseinfo += ("发给 "+str(SlaveIdDict[slaveid])+' '+str(FunCodeDict[funcode])+' '+str(RegisterBlockDict[blockaddress])+' '+"起始地址:"+str(hex(regaddress))+' '+"起始位置:"+str(StateBlockDict[regaddress])+' ')
+        if self.n_baseinfo_simply_switch == 1:  # simply switch
+            s_baseinfo += ("发给 "+str(SlaveIdDict[slaveid])+' '+str(FunCodeDict[funcode])+' ')
+        elif self.n_baseinfo_simply_switch == 0:
+            s_baseinfo += ("发给 "+str(SlaveIdDict[slaveid])+' '+str(FunCodeDict[funcode])+' '+str(RegisterBlockDict[blockaddress])+' '+"起始地址:"+str(hex(regaddress))+' '+"起始位置:"+str(StateBlockDict[regaddress])+' ')
 
         if funcode == 0x03:  # 读取
             (quantity, ) = struct.unpack('>H', modbus_request[4:6])
             # print("长度:", quantity)
-            s_baseinfo += ("长度:"+str(quantity)+' ')
+            if self.n_baseinfo_simply_switch == 0:
+                s_baseinfo += ("长度:"+str(quantity)+' ')
+            else:
+                pass
             # print(s_baseinfo)
 
         elif funcode == 0x06:  # 单个设置
             (dataa, ) = struct.unpack('>H', modbus_request[4:6])
             # print("数据:", hex(dataa))
-            s_baseinfo += ("数据:"+str(hex(dataa))+' ')
+            if self.n_baseinfo_simply_switch == 0:
+                s_baseinfo += ("数据:"+str(hex(dataa))+' ')
+            else:
+                pass
             # print(s_baseinfo)
 
         elif funcode == 0x10:  # 连续设置
@@ -57,7 +69,10 @@ class parse_modbus(QObject):
                 data.append(struct.unpack(">" + fmt, modbus_request[7 + 2 * i:9 + 2 * i])[0])
             # print("长度:", quantity, "bytes:", bytenum, ' ', end="")  # end=""表示不换行
             # print("数据:", " ".join(hex(i) for i in data))
-            s_baseinfo += ("长度:"+str(quantity)+' '+"bytes:"+str(bytenum)+' '+"数据:"+" ".join(hex(i) for i in data)+' ')
+            if self.n_baseinfo_simply_switch == 0:
+                s_baseinfo += ("长度:"+str(quantity)+' '+"bytes:"+str(bytenum)+' '+"数据:"+" ".join(hex(i) for i in data)+' ')
+            else:
+                pass
             # print(s_baseinfo, end="")
 
             if StateBlockDict[regaddress] == 'LED控制字':
@@ -79,17 +94,28 @@ class parse_modbus(QObject):
         # b13：0，保留
         if (data[0]&0x8000) >> 15 == 1:
             # print("覆盖方式执行", ' ', end="")
-            s_ledinfo += ("覆盖方式执行"+' ')
+            if self.n_ledinfo_simply_switch == 0:
+                s_ledinfo += ("覆盖方式执行"+' ')
+            else:
+                pass
         elif (data[0]&0x8000) >> 15 == 0:
             # print("队列缓存执行", ' ', end="")
-            s_ledinfo += ("队列缓存执行"+' ')
+            if self.n_ledinfo_simply_switch == 0:
+                s_ledinfo += ("队列缓存执行"+' ')
+            else:
+                pass
         if (data[0]&0x4000) >> 14 == 1:
             # print("停止全部效果", ' ', end="")
-            s_ledinfo += ("停止全部效果" + ' ')
+            if self.n_ledinfo_simply_switch == 0:
+                s_ledinfo += ("停止全部效果" + ' ')
+            else:
+                pass
         elif (data[0]&0x4000) >> 14 == 0:
             # print("增加执行效果", ' ', end="")
-            s_ledinfo += ("增加执行效果" + ' ')
-
+            if self.n_ledinfo_simply_switch == 0:
+                s_ledinfo += ("增加执行效果" + ' ')
+            else:
+                pass
         # 效果编号
         # ledDic,记录了对应编号
         # print("LED效果:", ledDic[data[1]], ' ', end="")
@@ -117,16 +143,28 @@ class parse_modbus(QObject):
         # b13：0，保留
         if (data[0]&0x8000) >> 15 == 1:
             # print("覆盖方式执行", ' ', end="")
-            s_expressioninfo += ("覆盖方式执行"+' ')
+            if self.n_expressioninfo_simply_switch == 0:
+                s_expressioninfo += ("覆盖方式执行"+' ')
+            else:
+                pass
         elif (data[0]&0x8000) >> 15 == 0:
             # print("队列缓存执行", ' ', end="")
-            s_expressioninfo += ("队列缓存执行" + ' ')
+            if self.n_expressioninfo_simply_switch == 0:
+                s_expressioninfo += ("队列缓存执行" + ' ')
+            else:
+                pass
         if (data[0]&0x4000) >> 14 == 1:
             # print("停止全部效果", ' ', end="")
-            s_expressioninfo += ("停止全部效果" + ' ')
+            if self.n_expressioninfo_simply_switch == 0:
+                s_expressioninfo += ("停止全部效果" + ' ')
+            else:
+                pass
         elif (data[0]&0x4000) >> 14 == 0:
             # print("增加执行效果", ' ', end="")
-            s_expressioninfo += ("增加执行效果" + ' ')
+            if self.n_expressioninfo_simply_switch == 0:
+                s_expressioninfo += ("增加执行效果" + ' ')
+            else:
+                pass
 
         # 效果编号
         # ledDic,记录了对应编号
@@ -143,11 +181,9 @@ class parse_modbus(QObject):
         # global expressioninfosignal
         # expressioninfosignal.emit(s_expressioninfo)
         self.expressioninfosignal.emit(s_expressioninfo)
-    # actioninfosignal = pyqtSignal(str)
 
     def parse_action(self, data, s_baseinfo):
         s_actioninfo = s_baseinfo
-
 
         # 控制字
         # b15 1覆盖方式执行/0队列缓存执行
@@ -155,17 +191,28 @@ class parse_modbus(QObject):
         # b13：0，保留
         if (data[0] & 0x8000) >> 15 == 1:
             # print("覆盖方式执行", ' ', end="")
-            s_actioninfo += ("覆盖方式执行" + ' ')
+            if self.n_actioninfo_simply_switch == 0:
+                s_actioninfo += ("覆盖方式执行" + ' ')
+            else:
+                pass
         elif (data[0] & 0x8000) >> 15 == 0:
             # print("队列缓存执行", ' ', end="")
-            s_actioninfo += ("队列缓存执行" + ' ')
-
+            if self.n_actioninfo_simply_switch == 0:
+                s_actioninfo += ("队列缓存执行" + ' ')
+            else:
+                pass
         if (data[0] & 0x4000) >> 14 == 1:
             # print("停止全部效果", ' ', end="")
-            s_actioninfo += ("停止全部效果" + ' ')
+            if self.n_actioninfo_simply_switch == 0:
+                s_actioninfo += ("停止全部效果" + ' ')
+            else:
+                pass
         elif (data[0] & 0x4000) >> 14 == 0:
             # print("增加执行效果", ' ', end="")
-            s_actioninfo += ("增加执行效果" + ' ')
+            if self.n_actioninfo_simply_switch == 0:
+                s_actioninfo += ("增加执行效果" + ' ')
+            else:
+                pass
 
         # A动作编号
         # actionDict,记录了对应编号
